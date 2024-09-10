@@ -30,7 +30,7 @@ The [functions](functions/) folder contains Matlab and Python functions commonly
 
 ## `code`
 
-- The [step01_ train_val_test_GNN](step01_train_val_test_GNN/) folder contains our proposed graph neural network model (`model.py`), and the process of training, validating, and testing the model(`train_val_test.py`). 
+- The [step01_ train_val_test_GNN](step01_train_val_test_GNN/) folder contains our proposed graph neural network model (`model.py`), the process of training, validating, and testing the model(`train_val_test.py`), and the cross-validation(`cross_validation.py`) for the sensitivity test. 
 
   * Run the graph neural network model by
 
