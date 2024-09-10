@@ -30,27 +30,20 @@ def main(args):
 
 
     if dataset_type == 'HCPYA':
-        with open('/home/cuizaixu_lab/chenpeiyu/DATA_C/project/SC_FC_Pred/preprocessed_data/final/HCPA_SC_FC_reSC_info_245_final.pickle', 'rb') as out_data:
-                (SC, FC, re_SC, info) = pickle.load(out_data)
-        SC_train, SC_test, FC_train, FC_test, re_SC_train, re_SC_test, = train_test_split(SC, FC, re_SC, test_size=0.5, random_state=0)
+        with open('/home/cuizaixu_lab/chenpeiyu/DATA_C/project/SC_FC_Pred/preprocessed_data/final/HCP_SC_FC_reSC_info_297.pickle', 'rb') as out_data:
+            (SC, FC, re_SC, sub_list) = pickle.load(out_data)
+
+        SC_train, SC_test, FC_train, FC_test, re_SC_train, re_SC_test, = train_test_split(SC, FC, re_SC, test_size=0.5, random_state=args.seed)
 
 
-    elif dataset_type == 'HCPD':
+    else:
         with open(
-                '/home/cuizaixu_lab/chenpeiyu/DATA_C/project/SC_FC_Pred/preprocessed_data/final/HCPD_SC_FC_reSC_info_410_0925.pickle',
+                '/home/cuizaixu_lab/chenpeiyu/DATA_C/project/SC_FC_Pred/preprocessed_data/final/HCPD_SC_FC_reSC_info_499.pickle',
                 'rb') as out_data:
             (SC, FC, re_SC, info) = pickle.load(out_data)
 
         SC_train, SC_test, FC_train, FC_test, re_SC_train, re_SC_test = train_test_split(SC, FC, re_SC, test_size=0.5,
-                                                                                          random_state=0)
-
-    else:
-        with open(
-                '/home/cuizaixu_lab/chenpeiyu/DATA_C/project/SC_FC_Pred/preprocessed_data/final/ABCD_SC_FC_reSC_info_1572_4run.pickle',
-                'rb') as out_data:
-            (SC, FC, re_SC, info) = pickle.load(out_data)
-
-        SC_train, SC_test, FC_train, FC_test, re_SC_train, re_SC_test = train_test_split(SC, FC, re_SC, test_size=0.5, random_state=0)
+                                                                                          random_state=args.seed)
 
 
     train_data_x = SC_train
@@ -100,6 +93,9 @@ def main(args):
                     time_end = time.time()
                     print('train_epoch', time_end - time_start, 's')
                     train_model(args, model, device, train_loader, optimizer, epoch)
+                    if epoch % args.checkperiod == 0 or epoch == args.epochs:
+                        temp_corr_ = test_model(model, device, test_loader)
+
                     if epoch == args.epochs:
                         temp_corr = test_model(model, device, test_loader)
 
@@ -126,9 +122,6 @@ def main(args):
                 train_model(args, model, device, train_loader, optimizer, epoch)
                 time_end = time.time()
                 print('train_epoch：', epoch, time_end - time_start, 's')
-                if epoch % args.checkperiod == 0 or epoch == args.epochs:
-                    temp_corr_ = test_model(model, device, test_loader)
-
                 time_end = time.time()
                 print('test_epoch', time_end - time_start, 's')
 
@@ -177,21 +170,19 @@ if __name__ == '__main__':
     print("if cuda available:", torch.cuda.is_available())
     # parser settings
     parser = argparse.ArgumentParser(description='GNN SC FC')
-    parser.add_argument('--batch-size', type=int, default=4, metavar='N',
+    parser.add_argument('--batch-size', type=int, default=2, metavar='N',
                         help='input batch size for training (default: 4)')
-    parser.add_argument('--layer-num', type=int, default=1, metavar='N',
+    parser.add_argument('--layer-num', type=int, default=2, metavar='N',
                         help='the layer number of GNN')
-    parser.add_argument('--conv-dim', type=int, default=64, metavar='N',
+    parser.add_argument('--conv-dim', type=int, default=256, metavar='N',
                         help='the conv dim of GNN')
     parser.add_argument('--test-batch-size', type=int, default=1, metavar='N',
                         help='input batch size for testing (default: 1)')
-    parser.add_argument('--epochs', type=int, default=100, metavar='N',
+    parser.add_argument('--epochs', type=int, default=400, metavar='N',
                         help='number of epochs to train (default: 100)')
-    parser.add_argument('--lr', type=float, default=0.0001, metavar='LR',
+    parser.add_argument('--lr', type=float, default=0.001, metavar='LR',
                         help='learning rate (default: 0.0001)')
-    parser.add_argument('--gamma', type=float, default=0.8, metavar='M',
-                        help='Learning rate step gamma (default: 0.8)')
-    parser.add_argument('--reg', type=float, default=0, metavar='M',
+    parser.add_argument('--reg', type=float, default=0.0001, metavar='M',
                         help='regularization parameter')
     parser.add_argument('--no-cuda', action='store_true', default=False,
                         help='disables CUDA training')
@@ -199,22 +190,18 @@ if __name__ == '__main__':
                         help='disables macOS GPU training')
     parser.add_argument('--seed', type=int, default=0, metavar='S',
                         help='random seed (default: 0)')
-    parser.add_argument('--checkepoch', type=int, default=200, metavar='N',
+    parser.add_argument('--checkepoch', type=int, default=50, metavar='N',
                         help='how many epochs to wait before logging training result')
     parser.add_argument('--checkperiod', type=int, default=20, metavar='N',
                         help='check period')
     parser.add_argument('--save-model', action='store_true', default=False,
                         help='For Saving the current Model')
-    parser.add_argument('--load-model', action='store_true', default=False,
-                        help='For loading the trained Model')
     parser.add_argument('--if-kfold', default=False,
                         help='5 fold on training set search the optimal hyperparameter')
     parser.add_argument('--rewired', type=int, default=0, metavar='N',
                         help='the rewired parameter, 0 represents no rewired')
     parser.add_argument('--use-rewired', action='store_true', default=False, help='whether use rewired SC')
-    parser.add_argument('--permutation',  action='store_true', default=False,
-                        help='if do permutation examination')
-    parser.add_argument('--dataset', default='HCPA', help='choose a dataset')
+    parser.add_argument('--dataset', default='HCPYA', help='choose a dataset')
     parser.add_argument('--get-result', action='store_true', default=False, help='if get result')
 
 
