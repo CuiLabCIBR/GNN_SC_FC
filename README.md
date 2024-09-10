@@ -55,7 +55,7 @@ The [functions](functions/) folder contains Matlab and Python functions commonly
 
   
 
-- The [step_03_whole_brain_group_ind_effects](step_03_whole_brain_group_ind_effects/) folder contains codes to calculate the whole-brain group-common and individual-specific effects of the structure-function coupling and plot *Fig. 3* and *Fig.S4a*.
+- The [step_03_whole_brain_group_ind_effects](step_03_whole_brain_group_ind_effects/) folder contains codes to calculate the whole-brain group-common and individual-specific effects of the structure-function coupling and plot *Fig. 3* and *Fig.S5a*.
 
   * Run `step_01_whole_brain_group_ind_effects_linear.m` and `step_01_whole_brain_group_ind_effects_GNN.m` to calculate the group and individual effects for the whole brain.
   * Run  `step_02_barplot_group_linear_ind.py` and  `step_02_barplot_group_GNN_ind.py`  to plot the *Fig.3b&c*. 
@@ -68,7 +68,7 @@ The [functions](functions/) folder contains Matlab and Python functions commonly
 
   
 
-- The [step_04_regional_group_ind_effects](step_04_regional_group_ind_effects/) folder contains codes to calculate the whole-brain group-common and individual-specific effects of the structure-function coupling and their relationship with the sensorimotor-association axis, and plot *Fig.4*, *Fig.5*,  *Fig.S3* and  *Fig.S4b-g*. 
+- The [step_04_regional_group_ind_effects](step_04_regional_group_ind_effects/) folder contains codes to calculate the whole-brain group-common and individual-specific effects of the structure-function coupling and their relationship with the sensorimotor-association axis, and plot *Fig.4*, *Fig.5*,  *Fig.S4* and  *Fig.S5b-g*. 
 
   * Run `step_01_regional_group_ind_effects_GNN.m` to calculate the regional group and individual effects at the regional level.
 
@@ -78,7 +78,7 @@ The [functions](functions/) folder contains Matlab and Python functions commonly
 
   * Run `step_02_scatterplot_group_ind_effect_sa_rank_GNN.R` to plot the *Fig. 4e&f* and *Fig. 5e&f*.
 
-  * For the linear model, run `step_03_regional_group_ind_effects_linear.m` and `step_03_scatterplot_group_ind_effect_sa_rank_linear.R` to plot the *Fig.S2*.
+  * For the linear model, run `step_03_regional_group_ind_effects_linear.m` and `step_03_scatterplot_group_ind_effect_sa_rank_linear.R` to plot the *Fig.S3*.
 
     
 
