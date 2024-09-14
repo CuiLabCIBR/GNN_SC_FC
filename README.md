@@ -19,7 +19,7 @@ The graph neural network is implemented in Pytorch  for CUDA 1.31.1 (https://pyt
 The visualization is implemented by Python 3.10, Matlab 2023a, and R 4.2.1. 
 
 ## `data`
-- The [sub_info](data/info/sub_info) folder contains all the subject information (`subID`,`age` and `gender`) in this study as well as the `sub_id` of the samples in the testing set.
+- The [sub_info](data/info/sub_info) folder contains all the subject ID in this study for both datasets as well as the subject ID of the samples in the testing set.
 - The [info](data/info) folder contains the Sensorimotor-association axis ranks and the spin test null distributions for Schaefer 200 and 400.
 - The [SC_FC_PredFC_matrix](data/SC_FC_PredFC_matrix) folder contains group-averaged SC, FC, PredFC matrices.
 - The [preprocessed_data](data/preprocessed_data) folder contains the preprocessed SC, FC data (please put your SC, FC here in pickle)
